@@ -10,6 +10,7 @@ interface InputBoxWithMicProps {
   onInputChange: (text: string) => void;
   onMicPress: () => void;
   style?: any;
+  marginTop?: number;
 }
 
 const InputBoxWithMic = ({
@@ -17,11 +18,13 @@ const InputBoxWithMic = ({
   inputValue,
   onInputChange,
   onMicPress,
+  style,
+  marginTop = 60,
 }: InputBoxWithMicProps) => {
   return (
     <>
       {/* Input container */}
-      <View style={styles.inputContainer}>
+      <View style={[styles.inputContainer, style, { marginTop }]}>
         <View style={styles.inputWrapper}>
           <TextInput
             style={[styles.textInput, { outline: "none" }]}
@@ -71,7 +74,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 12,
     marginBottom: 15,
-    marginTop: 60,
   },
   inputWrapper: {
     flex: 1,

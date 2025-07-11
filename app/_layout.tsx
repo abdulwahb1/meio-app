@@ -22,6 +22,7 @@ function RootLayoutNav() {
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       )}
       <Stack.Screen name="+not-found" />
+      <Stack.Screen name="speak-with-meio-2" options={{ headerShown: false }} />
     </Stack>
   );
 }

@@ -1,14 +1,17 @@
 import { AuthHeader } from "@/components/AuthHeader";
 import { ConversationInterface } from "@/components/ConversationInterface";
+import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import { ImageBackground, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function JourneyScreen() {
   const [inputText, setInputText] = useState("");
+  const router = useRouter();
 
   const handleMicPress = () => {
     console.log("Mic pressed in journey screen");
+    router.push("/speak-with-meio-2");
   };
 
   return (
@@ -32,7 +35,6 @@ export default function JourneyScreen() {
           inputValue={inputText}
           onInputChange={setInputText}
           onMicPress={handleMicPress}
-          showPrivacy={true}
         />
       </SafeAreaView>
     </ImageBackground>
