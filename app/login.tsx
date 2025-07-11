@@ -1,4 +1,6 @@
-import { useRouter } from "expo-router";
+import { AuthHeader } from "@/components/AuthHeader";
+import { PrivacyText } from "@/components/PrivacyText";
+import { useAuth } from "@/contexts/AuthContext";
 import React from "react";
 import {
   ImageBackground,
@@ -11,7 +13,11 @@ import {
 } from "react-native";
 
 export default function LoginScreen() {
-  const router = useRouter();
+  const { login } = useAuth();
+
+  const handleLogin = () => {
+    login();
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -21,15 +27,7 @@ export default function LoginScreen() {
         style={styles.backgroundImage}
         resizeMode="cover"
       >
-        <View style={styles.header}>
-          <TouchableOpacity
-            style={styles.backButton}
-            onPress={() => router.back()}
-          >
-            <Text style={styles.backButtonText}>←</Text>
-          </TouchableOpacity>
-          <Text style={styles.heading}>login</Text>
-        </View>
+        <AuthHeader title="login" />
 
         <View style={styles.content}>
           <View style={styles.buttonsContainer}>
@@ -41,18 +39,17 @@ export default function LoginScreen() {
               <Text style={styles.buttonText}>Sign Up</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={[styles.button, styles.loginButton]}>
+            <TouchableOpacity
+              style={[styles.button, styles.loginButton]}
+              onPress={handleLogin}
+            >
               <Text style={[styles.buttonText, styles.loginButtonText]}>
                 Login
               </Text>
             </TouchableOpacity>
           </View>
 
-          <View style={styles.privacyContainer}>
-            <Text style={styles.privacyText}>
-              🔒 Your data stays 100% private
-            </Text>
-          </View>
+          <PrivacyText />
         </View>
       </ImageBackground>
     </SafeAreaView>
@@ -68,34 +65,6 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
   },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: 20,
-    paddingTop: 20,
-  },
-  backButton: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    backgroundColor: "rgba(0, 0, 0, 0.1)",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  backButtonText: {
-    fontSize: 24,
-    color: "#333",
-  },
-  heading: {
-    fontSize: 32,
-    fontWeight: "bold",
-    color: "#333",
-    fontFamily: "AbhayaLibre-Bold",
-    flex: 1,
-    textAlign: "center",
-    marginRight: 50, // Balance the back button
-  },
   content: {
     flex: 1,
     justifyContent: "flex-end",
@@ -103,14 +72,16 @@ const styles = StyleSheet.create({
     paddingBottom: 50,
   },
   buttonsContainer: {
-    gap: 15,
+    gap: 10,
     marginBottom: 30,
   },
   button: {
-    backgroundColor: "rgba(255, 255, 255, 0.9)",
-    paddingVertical: 18,
+    backgroundColor: "rgba(255, 255, 255, 1)",
+    paddingVertical: 12,
     paddingHorizontal: 20,
-    borderRadius: 25,
+    borderRadius: 10,
+    borderColor: "#000",
+    borderWidth: 1,
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
@@ -128,18 +99,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "600",
     color: "#333",
-    fontFamily: "AbhayaLibre-Medium",
+    fontFamily: "libre-extrabold",
   },
   loginButtonText: {
     color: "#fff",
   },
-  privacyContainer: {
-    alignItems: "center",
-  },
-  privacyText: {
-    fontSize: 14,
-    color: "#666",
-    fontFamily: "AbhayaLibre-Regular",
-  },
 });
-
