@@ -1,4 +1,5 @@
 import { GradientMicButton } from "@/components/GradientMicButton";
+import { useRouter } from "expo-router";
 import React from "react";
 import {
   Animated,
@@ -13,8 +14,11 @@ import Svg, { Path } from "react-native-svg";
 // Import your screen components
 import CommunityScreen from "./community";
 import JourneyScreen from "./journey";
+import SpeakWithMeio1 from "./speak-with-meio-1";
 
 export default function TabLayout() {
+  const router = useRouter();
+
   const _renderIcon = (routeName: string, selectedTab: string) => {
     let label = "";
 
@@ -99,6 +103,7 @@ export default function TabLayout() {
             size={120}
             onPress={() => {
               console.log("Mic button pressed");
+              navigate("speak-with-meio-1");
             }}
           />
         </Animated.View>
@@ -125,6 +130,11 @@ export default function TabLayout() {
         name="community"
         position="RIGHT"
         component={() => <CommunityScreen />}
+      />
+      <CurvedBottomBarExpo.Screen
+        name="speak-with-meio-1"
+        position="CENTER"
+        component={() => <SpeakWithMeio1 />}
       />
     </CurvedBottomBarExpo.Navigator>
   );
