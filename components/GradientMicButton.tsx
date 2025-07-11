@@ -3,11 +3,10 @@ import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 
 interface GradientMicButtonProps {
   onPress?: () => void;
+  size: number;
 }
 
-export function GradientMicButton({ onPress }: GradientMicButtonProps) {
-  const size = 120;
-
+export function GradientMicButton({ onPress, size }: GradientMicButtonProps) {
   return (
     <View style={styles.container}>
       <TouchableOpacity

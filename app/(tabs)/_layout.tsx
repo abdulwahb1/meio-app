@@ -96,6 +96,7 @@ export default function TabLayout() {
       }) => (
         <Animated.View style={styles.btnCircleUp}>
           <GradientMicButton
+            size={120}
             onPress={() => {
               console.log("Mic button pressed");
             }}
