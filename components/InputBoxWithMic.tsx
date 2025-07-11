@@ -11,6 +11,8 @@ interface InputBoxWithMicProps {
   onMicPress: () => void;
   style?: any;
   marginTop?: number;
+  showMic?: boolean;
+  showPrivateText?: boolean;
 }
 
 const InputBoxWithMic = ({
@@ -20,6 +22,8 @@ const InputBoxWithMic = ({
   onMicPress,
   style,
   marginTop = 60,
+  showMic = true,
+  showPrivateText = true,
 }: InputBoxWithMicProps) => {
   return (
     <>
@@ -34,11 +38,11 @@ const InputBoxWithMic = ({
             onChangeText={onInputChange}
           />
         </View>
-        <GradientMicButtonNew onPress={onMicPress} />
+        {showMic && <GradientMicButtonNew onPress={onMicPress} />}
       </View>
 
       {/* Privacy text */}
-      <PrivacyText />
+      {showPrivateText && <PrivacyText />}
     </>
   );
 };

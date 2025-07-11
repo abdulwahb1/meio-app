@@ -27,6 +27,7 @@ const SpeakWithMeio2 = () => {
 
   const handleMicPress = () => {
     console.log("Mic pressed in speak-with-meio-2 screen");
+    router.push("/speak-with-meio-3");
   };
 
   const handleBackPress = () => {
