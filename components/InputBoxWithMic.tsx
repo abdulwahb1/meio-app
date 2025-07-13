@@ -76,17 +76,17 @@ const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 12,
+    gap: 6,
     marginBottom: 15,
   },
   inputWrapper: {
     flex: 1,
     backgroundColor: "#F8F8F8",
-    borderRadius: 25,
+    borderRadius: 30,
     borderWidth: 1,
     borderColor: "#E0E0E0",
     paddingHorizontal: 20,
-    paddingVertical: 12,
+    paddingVertical: 6,
     minHeight: 50,
   },
   textInput: {

@@ -1,6 +1,6 @@
 import { AuthHeader } from "@/components/AuthHeader";
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const journey = () => {
@@ -66,13 +66,20 @@ const journey = () => {
         </View>
       </View>
 
-      {/* Journey Image Section */}
+      {/* Journey Image Section - Now Scrollable */}
       <View style={styles.imageSection}>
-        <Image
-          source={require("@/assets/images/journey.png")}
-          style={styles.journeyImage}
-          resizeMode="cover"
-        />
+        <ScrollView
+          style={styles.scrollView}
+          contentContainerStyle={styles.scrollContent}
+          showsVerticalScrollIndicator={true}
+          bounces={true}
+        >
+          <Image
+            source={require("@/assets/images/journey.png")}
+            style={styles.journeyImage}
+            resizeMode="cover"
+          />
+        </ScrollView>
       </View>
     </SafeAreaView>
   );
@@ -85,7 +92,7 @@ const styles = StyleSheet.create({
   },
   weeklySection: {
     paddingHorizontal: 20,
-    paddingVertical: 20,
+    paddingVertical: 5,
   },
   weeklyContainer: {
     flexDirection: "row",
@@ -113,14 +120,17 @@ const styles = StyleSheet.create({
   },
   imageSection: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    paddingHorizontal: 20,
-    paddingBottom: 100, // Account for curved bottom bar
+    paddingLeft: 20,
   },
   journeyImage: {
     width: "100%",
-    height: "100%",
+    height: 800, // Give it a specific height so it's visible and scrollable
+  },
+  scrollView: {
+    flex: 1,
+  },
+  scrollContent: {
+    flexGrow: 1,
   },
 });
 

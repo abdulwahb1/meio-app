@@ -18,7 +18,7 @@ export default function SpeakWithMeio1() {
     <ImageBackground
       source={require("@/assets/images/journey-bg-1.png")}
       style={styles.container}
-      resizeMode="none"
+      resizeMode="cover"
     >
       <SafeAreaView style={styles.safeArea}>
         {/* Header */}
@@ -50,6 +50,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   spacer: {
-    marginTop: 350,
+    marginTop: 250,
   },
 });

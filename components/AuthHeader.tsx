@@ -56,7 +56,9 @@ export function AuthHeader({
 
         {/* Center section - title */}
         <View style={styles.centerSection}>
-          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.title} numberOfLines={1} adjustsFontSizeToFit>
+            {title}
+          </Text>
         </View>
 
         {/* Right section - back button or user button */}
@@ -83,7 +85,7 @@ export function AuthHeader({
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
-    paddingTop: 10,
+    paddingTop: 0,
     paddingBottom: 20,
   },
   headerContent: {
@@ -104,10 +106,9 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
   },
   title: {
-    fontSize: 32,
-    fontWeight: "bold",
+    fontSize: 36,
     color: "rgba(0, 0, 0, 0.6)",
-    fontFamily: "libre-bold",
+    fontFamily: "libre-extrabold",
     textAlign: "center",
   },
   backButton: {

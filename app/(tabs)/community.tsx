@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
   statsContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
-    paddingVertical: 20,
+    paddingVertical: 5,
     paddingHorizontal: 20,
     backgroundColor: "#FFFFFF",
   },

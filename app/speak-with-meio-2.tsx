@@ -43,7 +43,7 @@ const SpeakWithMeio2 = () => {
     <ImageBackground
       source={require("@/assets/images/speak-with-meo2-bg.png")}
       style={styles.container}
-      resizeMode="none"
+      resizeMode="cover"
     >
       <SafeAreaView style={styles.safeArea}>
         {/* Header with back button */}
