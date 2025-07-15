@@ -17,7 +17,37 @@ function RootLayoutNav() {
   return (
     <Stack screenOptions={{ headerShown: false }}>
       {!isLoggedIn ? (
-        <Stack.Screen name="login" options={{ headerShown: false }} />
+        <>
+          <Stack.Screen name="login" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="onboarding/welcome"
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="onboarding/personalization-1"
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="onboarding/personalization-2"
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="onboarding/personalization-3"
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="onboarding/analysis"
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="onboarding/paywall"
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="onboarding/completion"
+            options={{ headerShown: false }}
+          />
+        </>
       ) : (
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       )}

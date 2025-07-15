@@ -1,6 +1,7 @@
 import { AuthHeader } from "@/components/AuthHeader";
 import { PrivacyText } from "@/components/PrivacyText";
 import { useAuth } from "@/contexts/AuthContext";
+import { useRouter } from "expo-router";
 import React from "react";
 import {
   ImageBackground,
@@ -14,9 +15,14 @@ import {
 
 export default function LoginScreen() {
   const { login } = useAuth();
+  const router = useRouter();
 
   const handleLogin = () => {
     login();
+  };
+
+  const handleSignUp = () => {
+    router.push("/onboarding/welcome" as any);
   };
 
   return (
@@ -27,7 +33,9 @@ export default function LoginScreen() {
         style={styles.backgroundImage}
         resizeMode="cover"
       >
-        <AuthHeader title="login" />
+        <View style={styles.headerContainer}>
+          <AuthHeader title="login" />
+        </View>
 
         <View style={styles.content}>
           <View style={styles.buttonsContainer}>
@@ -35,7 +43,7 @@ export default function LoginScreen() {
               <Text style={styles.buttonText}>Forgot Password?</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={styles.button} onPress={handleSignUp}>
               <Text style={styles.buttonText}>Sign Up</Text>
             </TouchableOpacity>
 
@@ -59,6 +67,9 @@ export default function LoginScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  headerContainer: {
+    paddingTop: 40,
   },
   backgroundImage: {
     flex: 1,

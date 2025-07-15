@@ -1,3 +1,4 @@
+import { useRouter } from "expo-router";
 import React, { createContext, ReactNode, useContext, useState } from "react";
 
 interface AuthContextType {
@@ -9,10 +10,11 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [isLoggedIn, setIsLoggedIn] = useState(true); // Temporarily set to true for testing
-
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Temporarily set to true for testing
+  const router = useRouter();
   const login = () => {
     setIsLoggedIn(true);
+    router.push("/journey");
   };
 
   const logout = () => {
