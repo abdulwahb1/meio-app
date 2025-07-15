@@ -1,8 +1,9 @@
 import { useRouter } from "expo-router";
 import { MoveLeft } from "lucide-react-native";
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Svg, { Path } from "react-native-svg";
+import { SettingsModal } from "./SettingsModal";
 
 interface AuthHeaderProps {
   title: string;
@@ -18,6 +19,11 @@ export function AuthHeader({
   showUserIcon = false,
 }: AuthHeaderProps) {
   const router = useRouter();
+  const [showSettings, setShowSettings] = useState(false);
+
+  const handleUserPress = () => {
+    setShowSettings(true);
+  };
 
   const handleBack = () => {
     if (onClick) {
@@ -27,13 +33,13 @@ export function AuthHeader({
     }
   };
 
-  const handleUserPress = () => {
-    if (onClick) {
-      onClick();
-    }
-    // Add user menu logic here
-    console.log("User icon pressed");
-  };
+  // const handleUserPress = () => {
+  //   if (onClick) {
+  //     onClick();
+  //   }
+  //   // Add user menu logic here
+  //   console.log("User icon pressed");
+  // };
 
   const UserIcon = () => (
     <Svg width="26" height="26" viewBox="0 0 26 26" fill="none">
@@ -78,6 +84,10 @@ export function AuthHeader({
           )}
         </View>
       </View>
+      <SettingsModal
+        visible={showSettings}
+        onClose={() => setShowSettings(false)}
+      />
     </View>
   );
 }

@@ -49,10 +49,24 @@ function RootLayoutNav() {
           />
         </>
       ) : (
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          {/* Full-screen chat screens (no tab bar) */}
+          <Stack.Screen
+            name="speak-with-meio-1"
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="speak-with-meio-2"
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="speak-with-meio-3"
+            options={{ headerShown: false }}
+          />
+        </>
       )}
       <Stack.Screen name="+not-found" />
-      <Stack.Screen name="speak-with-meio-2" options={{ headerShown: false }} />
     </Stack>
   );
 }

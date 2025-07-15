@@ -1,47 +1,34 @@
 import { AuthHeader } from "@/components/AuthHeader";
+import { LearningPathCard } from "@/components/LearningPathCard";
+import { learningPaths, weeklyData } from "@/lib/const";
 import React from "react";
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const journey = () => {
-  // Sample weekly data - this will come from API later
-  const weeklyData = [
-    { day: "Mo", date: "", icon: "completed", isActive: false },
-    { day: "Tu", date: "", icon: "completed", isActive: false },
-    { day: "We", date: "", icon: "pending", isActive: true },
-    { day: "Th", date: "", icon: "completed", isActive: false },
-    { day: "Fr", date: "", icon: "empty", isActive: false },
-    { day: "Sa", date: "", icon: "empty", isActive: false },
-    { day: "Su", date: "", icon: "empty", isActive: false },
-  ];
+const renderDayIcon = (iconType: string, isActive: boolean) => {
+  let iconSource;
 
-  const renderDayIcon = (iconType: string, isActive: boolean) => {
-    let iconSource;
+  switch (iconType) {
+    case "completed":
+      iconSource = require("@/assets/icons/Check circle.png");
+      break;
+    case "pending":
+      iconSource = require("@/assets/icons/Alert circle.png");
+      break;
+    case "empty":
+    default:
+      iconSource = require("@/assets/icons/Circle.png");
+      break;
+  }
 
-    switch (iconType) {
-      case "completed":
-        iconSource = require("@/assets/icons/Check circle.png");
-        break;
-      case "pending":
-        iconSource = require("@/assets/icons/Alert circle.png");
-        break;
-      case "empty":
-      default:
-        iconSource = require("@/assets/icons/Circle.png");
-        break;
-    }
+  return (
+    <View style={styles.iconContainer}>
+      <Image source={iconSource} style={styles.dayIcon} resizeMode="contain" />
+    </View>
+  );
+};
 
-    return (
-      <View style={styles.iconContainer}>
-        <Image
-          source={iconSource}
-          style={styles.dayIcon}
-          resizeMode="contain"
-        />
-      </View>
-    );
-  };
-
+const Journey = () => {
   return (
     <SafeAreaView style={styles.container}>
       {/* Header with user icon */}
@@ -66,7 +53,28 @@ const journey = () => {
         </View>
       </View>
 
-      {/* Journey Image Section - Now Scrollable */}
+      {/* Learning Paths Section */}
+      <ScrollView
+        style={styles.scrollContainer}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContent}
+      >
+        <View style={styles.pathsContainer}>
+          <Text style={styles.sectionTitle}>Your Learning Paths</Text>
+          <Text style={styles.sectionSubtitle}>
+            Continue your journey of personal growth
+          </Text>
+
+          <View style={styles.pathsList}>
+            {learningPaths.map((path) => (
+              <LearningPathCard key={path.id} path={path} />
+            ))}
+          </View>
+        </View>
+      </ScrollView>
+
+      {/* Journey Image Section - COMMENTED OUT FOR NOW */}
+      {/* 
       <View style={styles.imageSection}>
         <ScrollView
           style={styles.scrollView}
@@ -81,6 +89,7 @@ const journey = () => {
           />
         </ScrollView>
       </View>
+      */}
     </SafeAreaView>
   );
 };
@@ -118,20 +127,46 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     fontFamily: "satoshi",
   },
+  scrollContainer: {
+    flex: 1,
+  },
+  scrollContent: {
+    paddingBottom: 100,
+  },
+  pathsContainer: {
+    paddingHorizontal: 20,
+    paddingTop: 10,
+  },
+  sectionTitle: {
+    fontSize: 28,
+    fontWeight: "bold",
+    color: "#000",
+    fontFamily: "libre-bold",
+    marginBottom: 8,
+  },
+  sectionSubtitle: {
+    fontSize: 16,
+    color: "rgba(0, 0, 0, 0.6)",
+    fontFamily: "satoshi",
+    marginBottom: 30,
+  },
+  pathsList: {
+    gap: 16,
+  },
+  // Commented out image section styles - keeping for potential future use
+  /*
   imageSection: {
     flex: 1,
     paddingLeft: 20,
   },
   journeyImage: {
     width: "100%",
-    height: 800, // Give it a specific height so it's visible and scrollable
+    height: 800,
   },
   scrollView: {
     flex: 1,
   },
-  scrollContent: {
-    flexGrow: 1,
-  },
+  */
 });
 
-export default journey;
+export default Journey;
