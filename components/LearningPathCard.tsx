@@ -1,14 +1,23 @@
-import { learningPaths } from "@/lib/const";
 import { Lock, Play } from "lucide-react-native";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-// Learning Path Card Component
-export function LearningPathCard({
-  path,
-}: {
-  path: (typeof learningPaths)[0];
-}) {
+export interface LearningPath {
+  id: number;
+  title: string;
+  description: string;
+  progress: number;
+  isLocked: boolean;
+  color: string;
+  lessons: number;
+  completedLessons: number;
+}
+
+interface LearningPathCardProps {
+  path: LearningPath;
+}
+
+export function LearningPathCard({ path }: LearningPathCardProps) {
   const handlePress = () => {
     if (path.isLocked) {
       console.log("Premium content - show upgrade prompt");
@@ -77,9 +86,6 @@ export function LearningPathCard({
 }
 
 const styles = StyleSheet.create({
-  pathsList: {
-    gap: 16,
-  },
   pathCard: {
     backgroundColor: "#FFFFFF",
     borderRadius: 16,

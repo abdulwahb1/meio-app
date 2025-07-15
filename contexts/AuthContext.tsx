@@ -1,31 +1,68 @@
-import { useRouter } from "expo-router";
-import React, { createContext, ReactNode, useContext, useState } from "react";
+import { supabase } from "@/lib/supabase";
+import { Session, User } from "@supabase/supabase-js";
+import React, { createContext, useContext, useEffect, useState } from "react";
 
 interface AuthContextType {
   isLoggedIn: boolean;
-  login: () => void;
+  user: User | null;
+  session: Session | null;
+  loading: boolean;
+  login: () => void; // Legacy method for compatibility
   logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export function AuthProvider({ children }: { children: ReactNode }) {
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Temporarily set to true for testing
-  const router = useRouter();
+export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const [session, setSession] = useState<Session | null>(null);
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Get initial session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      setUser(session?.user ?? null);
+      setLoading(false);
+    });
+
+    // Listen for auth changes
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+      setUser(session?.user ?? null);
+      setLoading(false);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  // Legacy login method for backward compatibility
   const login = () => {
-    setIsLoggedIn(true);
-    router.push("/journey");
+    // This is just for compatibility with existing code
+    // Actual login should be done through the login screen
+    console.log("Use the login screen for authentication");
   };
 
-  const logout = () => {
-    setIsLoggedIn(false);
+  const logout = async () => {
+    try {
+      await supabase.auth.signOut();
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
   };
 
-  return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  const value: AuthContextType = {
+    isLoggedIn: !!session,
+    user,
+    session,
+    loading,
+    login,
+    logout,
+  };
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
 export function useAuth() {

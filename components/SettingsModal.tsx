@@ -1,4 +1,4 @@
-import { useAuth } from "@/contexts/AuthContext";
+import { useSignOut } from "@/hooks/useAuth";
 import { Bell, CreditCard, LogOut, Shield, User, X } from "lucide-react-native";
 import React from "react";
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
@@ -9,11 +9,15 @@ interface SettingsModalProps {
 }
 
 export function SettingsModal({ visible, onClose }: SettingsModalProps) {
-  const { logout } = useAuth();
+  const signOutMutation = useSignOut();
 
-  const handleLogout = () => {
-    logout();
-    onClose();
+  const handleLogout = async () => {
+    try {
+      await signOutMutation.mutateAsync();
+      onClose();
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
   };
 
   const settingsOptions = [
@@ -55,10 +59,11 @@ export function SettingsModal({ visible, onClose }: SettingsModalProps) {
     },
     {
       id: "logout",
-      title: "Logout",
+      title: signOutMutation.isPending ? "Logging out..." : "Logout",
       icon: LogOut,
       onPress: handleLogout,
       isDestructive: true,
+      disabled: signOutMutation.isPending,
     },
   ];
 
@@ -82,18 +87,29 @@ export function SettingsModal({ visible, onClose }: SettingsModalProps) {
             {settingsOptions.map((option) => (
               <TouchableOpacity
                 key={option.id}
-                style={styles.optionItem}
+                style={[
+                  styles.optionItem,
+                  option.disabled && styles.optionItemDisabled,
+                ]}
                 onPress={option.onPress}
+                disabled={option.disabled}
               >
                 <View style={styles.optionContent}>
                   <option.icon
                     size={20}
-                    color={option.isDestructive ? "#FF4B4B" : "#333"}
+                    color={
+                      option.disabled
+                        ? "#999"
+                        : option.isDestructive
+                        ? "#FF4B4B"
+                        : "#333"
+                    }
                   />
                   <Text
                     style={[
                       styles.optionText,
                       option.isDestructive && styles.destructiveText,
+                      option.disabled && styles.disabledText,
                     ]}
                   >
                     {option.title}
@@ -158,6 +174,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     borderRadius: 12,
   },
+  optionItemDisabled: {
+    opacity: 0.6,
+  },
   optionContent: {
     flexDirection: "row",
     alignItems: "center",
@@ -171,5 +190,8 @@ const styles = StyleSheet.create({
   },
   destructiveText: {
     color: "#FF4B4B",
+  },
+  disabledText: {
+    color: "#999",
   },
 });

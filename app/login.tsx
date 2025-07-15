@@ -18,11 +18,15 @@ export default function LoginScreen() {
   const router = useRouter();
 
   const handleLogin = () => {
-    login();
+    router.push("/auth-login" as any);
   };
 
   const handleSignUp = () => {
     router.push("/onboarding/welcome" as any);
+  };
+
+  const handleForgotPassword = () => {
+    router.push("/auth-reset" as any);
   };
 
   return (
@@ -39,7 +43,10 @@ export default function LoginScreen() {
 
         <View style={styles.content}>
           <View style={styles.buttonsContainer}>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={handleForgotPassword}
+            >
               <Text style={styles.buttonText}>Forgot Password?</Text>
             </TouchableOpacity>
 

@@ -1,3 +1,5 @@
+import { LearningPath } from "@/components/LearningPathCard";
+
 // Sample weekly data - this will come from API later
 export const weeklyData = [
   { day: "Mo", date: "", icon: "completed", isActive: false },
@@ -10,7 +12,7 @@ export const weeklyData = [
 ];
 
 // Sample learning paths data
-export const learningPaths = [
+export const learningPaths: LearningPath[] = [
   {
     id: 1,
     title: "Intro to Melo",

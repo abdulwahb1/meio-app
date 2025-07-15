@@ -7,7 +7,7 @@ import React, { useState } from "react";
 import { ImageBackground, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const SpeakWithMeio3 = () => {
+export const SpeakWithMeio3 = () => {
   const [inputText, setInputText] = useState("");
   const router = useRouter();
 
@@ -123,5 +123,3 @@ const styles = StyleSheet.create({
     marginTop: 0,
   },
 });
-
-export default SpeakWithMeio3;

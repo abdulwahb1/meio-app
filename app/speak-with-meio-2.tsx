@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const SpeakWithMeio2 = () => {
+export const SpeakWithMeio2 = () => {
   const [inputText, setInputText] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const router = useRouter();
@@ -206,5 +206,3 @@ const styles = StyleSheet.create({
     elevation: 10,
   },
 });
-
-export default SpeakWithMeio2;
