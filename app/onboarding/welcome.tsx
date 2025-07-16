@@ -23,24 +23,29 @@ export default function WelcomeScreen() {
         style={styles.backgroundImage}
         resizeMode="cover"
       >
-        <View style={styles.content}>
-          <View style={styles.textContainer}>
-            <Text style={styles.headline}>
-              Hello! Ready to start your journey?
-            </Text>
-            <Text style={styles.description}>
-              Welcome to Melo, your personal companion for growth and
-              self-discovery. Let&apos;s create a journey that&apos;s uniquely
-              yours, filled with meaningful conversations and insights that help
-              you become the best version of yourself.
-            </Text>
-          </View>
+        {/* Top: Welcome to Melo */}
+        <View style={styles.topSection}>
+          <Text style={styles.welcomeTitle}>Welcome to Melo</Text>
+        </View>
 
+        {/* Center: Your journey begins */}
+        <View style={styles.centerSection}>
+          <Text style={styles.headline}>Your journey begins</Text>
+          <Text style={styles.description}>
+            Your personal companion for growth and self-discovery. Let&apos;s
+            create a journey that&apos;s uniquely yours, filled with meaningful
+            conversations and insights that help you become the best version of
+            yourself.
+          </Text>
+        </View>
+
+        {/* Bottom: Enter App Button */}
+        <View style={styles.bottomSection}>
           <TouchableOpacity
             style={styles.primaryButton}
             onPress={handleGetStarted}
           >
-            <Text style={styles.primaryButtonText}>Let&apos;s go</Text>
+            <Text style={styles.primaryButtonText}>Enter App</Text>
           </TouchableOpacity>
         </View>
       </ImageBackground>
@@ -56,25 +61,34 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     height: "100%",
+    justifyContent: "space-between",
   },
-  content: {
-    flex: 1,
-    justifyContent: "center",
-    paddingHorizontal: 30,
-    paddingBottom: 80,
-  },
-  textContainer: {
-    marginBottom: 60,
+  topSection: {
     alignItems: "center",
+    marginTop: 40,
+  },
+  welcomeTitle: {
+    fontSize: 28,
+    fontWeight: "bold",
+    color: "#000",
+    fontFamily: "libre-extrabold",
+    letterSpacing: 0.5,
+  },
+  centerSection: {
+    flex: 1,
+    justifyContent: "flex-end",
+    alignItems: "center",
+    paddingHorizontal: 30,
+    paddingBottom: 40,
   },
   headline: {
-    fontSize: 32,
+    fontSize: 26,
     fontWeight: "bold",
     color: "#000",
     textAlign: "center",
-    marginBottom: 24,
+    marginBottom: 18,
     fontFamily: "libre-extrabold",
-    lineHeight: 38,
+    lineHeight: 32,
   },
   description: {
     fontSize: 16,
@@ -83,6 +97,11 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     fontFamily: "satoshi",
     paddingHorizontal: 10,
+  },
+  bottomSection: {
+    alignItems: "center",
+    marginBottom: 50,
+    marginTop: 0,
   },
   primaryButton: {
     backgroundColor: "#000",

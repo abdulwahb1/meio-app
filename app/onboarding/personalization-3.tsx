@@ -3,6 +3,7 @@ import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -47,29 +48,33 @@ export default function Personalization3Screen() {
         <Text style={styles.question}>
           How would you like Melo to support you?
         </Text>
-
-        <View style={styles.optionsContainer}>
-          {options.map((option, index) => (
-            <TouchableOpacity
-              key={index}
-              style={[
-                styles.optionButton,
-                selectedOption === option && styles.selectedOption,
-              ]}
-              onPress={() => setSelectedOption(option)}
-            >
-              <Text
+        <ScrollView
+          style={styles.feedContainer}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.feedContent}
+        >
+          <View style={styles.optionsContainer}>
+            {options.map((option, index) => (
+              <TouchableOpacity
+                key={index}
                 style={[
-                  styles.optionText,
-                  selectedOption === option && styles.selectedOptionText,
+                  styles.optionButton,
+                  selectedOption === option && styles.selectedOption,
                 ]}
+                onPress={() => setSelectedOption(option)}
               >
-                {option}
-              </Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-
+                <Text
+                  style={[
+                    styles.optionText,
+                    selectedOption === option && styles.selectedOptionText,
+                  ]}
+                >
+                  {option}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </ScrollView>
         <TouchableOpacity
           style={[
             styles.continueButton,
@@ -96,6 +101,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#FFFFFF",
+    paddingTop: 30,
   },
   content: {
     flex: 1,
@@ -130,6 +136,12 @@ const styles = StyleSheet.create({
     marginBottom: 40,
     fontFamily: "libre-bold",
     lineHeight: 34,
+  },
+  feedContainer: {
+    flex: 1,
+  },
+  feedContent: {
+    paddingBottom: 40, // Add padding to the last post
   },
   optionsContainer: {
     flex: 1,

@@ -91,6 +91,10 @@ export default function RootLayout() {
     return null;
   }
 
+  if (typeof global.structuredClone !== "function") {
+    global.structuredClone = (obj) => JSON.parse(JSON.stringify(obj));
+  }
+
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
