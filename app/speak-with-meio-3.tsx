@@ -1,11 +1,12 @@
 import { AuthHeader } from "@/components/AuthHeader";
 import ConvAiDOMComponent from "@/components/ConvAI";
-import { HummingAnimation } from "@/components/HummingAnimation";
 import InputBoxWithMic from "@/components/InputBoxWithMic";
 import { PrivacyText } from "@/components/PrivacyText";
 import { useRouter } from "expo-router";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
+  Animated,
+  Image,
   ImageBackground,
   Platform,
   StyleSheet,
@@ -18,6 +19,7 @@ export const SpeakWithMeio3 = () => {
   const [inputText, setInputText] = useState("");
   const [conversationStatus, setConversationStatus] = useState("disconnected");
   const router = useRouter();
+  const mascotScaleAnim = useRef(new Animated.Value(1)).current;
 
   const handleBackPress = () => {
     router.back();
@@ -30,13 +32,38 @@ export const SpeakWithMeio3 = () => {
   // Show humming animation when connected or connecting
   const showHummingAnimation =
     conversationStatus === "connected" || conversationStatus === "connecting";
-  // Determine background image - you can add state for this if needed
-  const backgroundSource = showHummingAnimation
-    ? require("@/assets/images/speak-with-melo-no-mascot.png")
-    : require("@/assets/images/journey-bg.png");
+
+  // Subtle mascot animation when connected
+  useEffect(() => {
+    if (conversationStatus === "connected") {
+      const subtleHum = Animated.loop(
+        Animated.sequence([
+          Animated.timing(mascotScaleAnim, {
+            toValue: 1.09, // Very subtle scale increase
+            duration: 1500,
+            useNativeDriver: true,
+          }),
+          Animated.timing(mascotScaleAnim, {
+            toValue: 1,
+            duration: 1500,
+            useNativeDriver: true,
+          }),
+        ])
+      );
+      subtleHum.start();
+      return () => subtleHum.stop();
+    } else {
+      Animated.timing(mascotScaleAnim, {
+        toValue: 1,
+        duration: 300,
+        useNativeDriver: true,
+      }).start();
+    }
+  }, [conversationStatus, mascotScaleAnim]);
+
   return (
     <ImageBackground
-      source={backgroundSource}
+      source={require("@/assets/images/Group 8 (1).png")}
       style={styles.container}
       resizeMode="cover"
     >
@@ -48,14 +75,22 @@ export const SpeakWithMeio3 = () => {
           onClick={handleBackPress}
         />
 
-        {/* Humming animation - controlled by conversation state */}
-        <HummingAnimation isVisible={showHummingAnimation} />
-
         {/* Spacer to push content to bottom */}
         <View style={styles.spacer} />
 
         {/* Bottom content */}
         <View style={styles.bottomContent}>
+          {/* Mascot image */}
+          <View style={styles.mascotContainer}>
+            <Animated.View style={{ transform: [{ scale: mascotScaleAnim }] }}>
+              <Image
+                source={require("@/assets/images/Group 8 (2).png")}
+                style={styles.mascotImage}
+                resizeMode="contain"
+              />
+            </Animated.View>
+          </View>
+
           {/* Title and subtitle */}
           <View style={styles.textContainer}>
             <Text style={styles.title}>What happened?</Text>
@@ -64,7 +99,7 @@ export const SpeakWithMeio3 = () => {
                 ? "Connecting to AI agent..."
                 : conversationStatus === "connected"
                 ? "Connected! Start speaking..."
-                : "Tap the microphone to start a voice conversation with our AI agent"}
+                : "Describe the situation as objectively as possible and how it made you feel, Tap the microphone to start"}
             </Text>
           </View>
 
@@ -112,9 +147,9 @@ const styles = StyleSheet.create({
   bottomContent: {
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    paddingHorizontal: 15,
-    paddingTop: 10,
-    paddingBottom: 20,
+    paddingHorizontal: 20,
+    paddingTop: 0,
+    paddingBottom: 40,
     position: "relative",
   },
   textContainer: {
@@ -138,7 +173,7 @@ const styles = StyleSheet.create({
   micContainer: {
     alignItems: "center",
     justifyContent: "center",
-    marginVertical: 10,
+    marginVertical: 0,
     height: 120,
   },
   domComponent: {
@@ -147,6 +182,14 @@ const styles = StyleSheet.create({
   },
   privacyContainer: {
     marginTop: 0,
+  },
+  mascotContainer: {
+    alignItems: "center",
+    marginBottom: 10,
+  },
+  mascotImage: {
+    width: 300,
+    height: 300,
   },
   instructionText: {
     fontSize: 14,

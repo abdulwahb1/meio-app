@@ -128,8 +128,8 @@ export default function ConvAiDOMComponent({
           ]}
         >
           <Image
-            source={require("@/assets/icons/Frame 3.png")}
-            style={{ width: 120 }}
+            source={require("@/assets/icons/mic.png")}
+            style={styles.buttonIcon}
             resizeMode="contain"
           />
         </View>
@@ -143,16 +143,15 @@ const styles = StyleSheet.create({
     width: 120,
     height: 120,
     borderRadius: 60,
-    backgroundColor: "rgba(255, 255, 255, 0.1)",
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 24,
   },
   callButtonActive: {
-    backgroundColor: "rgba(239, 68, 68, 0.2)",
+    backgroundColor: "rgba(239, 68, 205, 0.2)",
   },
   callButtonConnecting: {
-    backgroundColor: "rgba(59, 130, 246, 0.2)",
+    backgroundColor: "rgba(222, 108, 199, 0.2)",
   },
   buttonInner: {
     width: 80,
@@ -176,6 +175,7 @@ const styles = StyleSheet.create({
     shadowColor: "#3B82F6",
   },
   buttonIcon: {
-    transform: [{ translateY: 2 }],
+    width: 120,
+    transform: [{ translateY: 3 }],
   },
 });
