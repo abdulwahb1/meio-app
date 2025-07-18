@@ -1,27 +1,42 @@
 import { AuthHeader } from "@/components/AuthHeader";
-import { GradientMicButtonNew } from "@/components/GradientMicButtonForScreen";
+import ConvAiDOMComponent from "@/components/ConvAI";
+import { HummingAnimation } from "@/components/HummingAnimation";
 import InputBoxWithMic from "@/components/InputBoxWithMic";
 import { PrivacyText } from "@/components/PrivacyText";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
-import { ImageBackground, StyleSheet, Text, View } from "react-native";
+import {
+  ImageBackground,
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export const SpeakWithMeio3 = () => {
   const [inputText, setInputText] = useState("");
+  const [conversationStatus, setConversationStatus] = useState("disconnected");
   const router = useRouter();
-
-  const handleMicPress = () => {
-    console.log("Mic pressed in speak-with-meio-3 screen");
-  };
 
   const handleBackPress = () => {
     router.back();
   };
 
+  const handleConversationStatusChange = (status: string) => {
+    setConversationStatus(status);
+  };
+
+  // Show humming animation when connected or connecting
+  const showHummingAnimation =
+    conversationStatus === "connected" || conversationStatus === "connecting";
+  // Determine background image - you can add state for this if needed
+  const backgroundSource = showHummingAnimation
+    ? require("@/assets/images/speak-with-melo-no-mascot.png")
+    : require("@/assets/images/journey-bg.png");
   return (
     <ImageBackground
-      source={require("@/assets/images/journey-bg.png")}
+      source={backgroundSource}
       style={styles.container}
       resizeMode="cover"
     >
@@ -33,6 +48,9 @@ export const SpeakWithMeio3 = () => {
           onClick={handleBackPress}
         />
 
+        {/* Humming animation - controlled by conversation state */}
+        <HummingAnimation isVisible={showHummingAnimation} />
+
         {/* Spacer to push content to bottom */}
         <View style={styles.spacer} />
 
@@ -42,28 +60,31 @@ export const SpeakWithMeio3 = () => {
           <View style={styles.textContainer}>
             <Text style={styles.title}>What happened?</Text>
             <Text style={styles.subtitle}>
-              Describe the situation as objectively as possible and how it made
-              you feel
+              {conversationStatus === "connecting"
+                ? "Connecting to AI agent..."
+                : conversationStatus === "connected"
+                ? "Connected! Start speaking..."
+                : "Tap the microphone to start a voice conversation with our AI agent"}
             </Text>
           </View>
 
-          {/* Input box without mic */}
+          {/* Input box for reference */}
           <InputBoxWithMic
-            placeholder="Write here . . ."
+            placeholder="Voice conversation..."
             inputValue={inputText}
             onInputChange={setInputText}
-            onMicPress={handleMicPress}
+            onMicPress={() => {}}
             showMic={false}
             marginTop={0}
             showPrivateText={false}
           />
 
-          {/* Mic button container - comes after input */}
+          {/* ElevenLabs DOM Component */}
           <View style={styles.micContainer}>
-            <GradientMicButtonNew
-              onPress={handleMicPress}
-              size={120}
-              image={require("@/assets/icons/diff-mic.png")}
+            <ConvAiDOMComponent
+              dom={{ style: styles.domComponent }}
+              platform={Platform.OS}
+              onStatusChange={handleConversationStatusChange}
             />
           </View>
 
@@ -118,8 +139,22 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginVertical: 10,
+    height: 120,
+  },
+  domComponent: {
+    width: 132,
+    height: 120,
   },
   privacyContainer: {
     marginTop: 0,
   },
+  instructionText: {
+    fontSize: 14,
+    color: "rgba(0, 0, 0, 0.6)",
+    textAlign: "center",
+    marginTop: 10,
+    fontFamily: "satoshi",
+  },
 });
+
+export default SpeakWithMeio3;

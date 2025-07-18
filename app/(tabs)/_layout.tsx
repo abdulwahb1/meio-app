@@ -103,7 +103,7 @@ export default function TabLayout() {
             size={120}
             onPress={() => {
               console.log("Mic button pressed");
-              navigate("speak-with-meio-1");
+              navigate("speak-with-meio-3");
             }}
           />
         </Animated.View>
